@@ -1,65 +1,281 @@
-import Image from "next/image";
+const projects = [
+  {
+    title: "Project title one",
+    type: "CAD",
+    description:
+      "A short placeholder description of this project goes here — what it is, what problem it solved, and what tools were used.",
+    link: "#",
+  },
+  {
+    title: "Project title two",
+    type: "CODE",
+    description:
+      "A short placeholder description of this project goes here — what it is, what problem it solved, and what tools were used.",
+    link: "#",
+  },
+  {
+    title: "Project title three",
+    type: "RESEARCH",
+    description:
+      "A short placeholder description of this project goes here — what it is, what problem it solved, and what tools were used.",
+    link: "#",
+  },
+  {
+    title: "Project title four",
+    type: "PDF",
+    description:
+      "A short placeholder description of this project goes here — what it is, what problem it solved, and what tools were used.",
+    link: "#",
+  },
+];
+
+const skills = [
+  "SolidWorks",
+  "Python",
+  "MATLAB",
+  "React",
+  "Next.js",
+  "AutoCAD",
+  "C++",
+  "Git",
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main
+      style={{
+        maxWidth: "680px",
+        margin: "0 auto",
+        padding: "0 24px",
+      }}
+    >
+      <section style={{ paddingTop: "96px", paddingBottom: "64px" }}>
+        <h1
+          style={{
+            fontFamily: "'Source Serif 4', serif",
+            fontSize: "42px",
+            fontWeight: 500,
+            margin: "0 0 8px",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Nathan
+        </h1>
+        <p
+          style={{
+            fontSize: "18px",
+            color: "var(--ink-soft)",
+            margin: "0 0 28px",
+          }}
+        >
+          Engineer &amp; builder — CAD, code, and research.
+        </p>
+        <p
+          style={{
+            fontSize: "16px",
+            lineHeight: 1.7,
+            maxWidth: "540px",
+            margin: 0,
+          }}
+        >
+          Placeholder bio paragraph. A few sentences about your background,
+          what you study or work on, and what kind of problems you like
+          solving. Swap this out with your own introduction whenever you are
+          ready.
+        </p>
+      </section>
+
+      <hr
+        style={{
+          border: "none",
+          borderTop: "1px solid var(--line)",
+          margin: 0,
+        }}
+      />
+
+      <section style={{ padding: "56px 0" }}>
+        <h2
+          style={{
+            fontSize: "13px",
+            fontFamily: "'JetBrains Mono', monospace",
+            letterSpacing: "0.08em",
+            color: "var(--ink-soft)",
+            margin: "0 0 20px",
+            textTransform: "uppercase",
+          }}
+        >
+          About
+        </h2>
+        <p style={{ fontSize: "16px", lineHeight: 1.7, margin: 0 }}>
+          Placeholder about section. This is the place for more background —
+          where you study, what you are focused on, and how you got into the
+          kind of work shown below. Replace with a couple of real paragraphs
+          when ready.
+        </p>
+      </section>
+
+      <hr
+        style={{
+          border: "none",
+          borderTop: "1px solid var(--line)",
+          margin: 0,
+        }}
+      />
+
+      <section style={{ padding: "56px 0" }}>
+        <h2
+          style={{
+            fontSize: "13px",
+            fontFamily: "'JetBrains Mono', monospace",
+            letterSpacing: "0.08em",
+            color: "var(--ink-soft)",
+            margin: "0 0 28px",
+            textTransform: "uppercase",
+          }}
+        >
+          Projects
+        </h2>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+          {projects.map((project) => (<a
+            
+              key={project.title}
+              href={project.link}
+              style={{
+                display: "block",
+                textDecoration: "none",
+                paddingBottom: "32px",
+                borderBottom: "1px solid var(--line)",
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "space-between",
+                  marginBottom: "8px",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: 500,
+                    margin: 0,
+                  }}
+                >
+                  {project.title}
+                </h3>
+                <span
+                  style={{
+                    fontSize: "11px",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    color: "var(--accent)",
+                    letterSpacing: "0.05em",
+                    border: "1px solid var(--line)",
+                    borderRadius: "4px",
+                    padding: "2px 8px",
+                    whiteSpace: "nowrap",
+                    marginLeft: "16px",
+                  }}
+                >
+                  {project.type}
+                </span>
+              </div>
+              <p
+                style={{
+                  fontSize: "15px",
+                  lineHeight: 1.6,
+                  color: "var(--ink-soft)",
+                  margin: 0,
+                }}
+              >
+                {project.description}
+              </p>
+            </a>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+      </section>
+
+      <hr
+        style={{
+          border: "none",
+          borderTop: "1px solid var(--line)",
+          margin: 0,
+        }}
+      />
+
+      <section style={{ padding: "56px 0" }}>
+        <h2
+          style={{
+            fontSize: "13px",
+            fontFamily: "'JetBrains Mono', monospace",
+            letterSpacing: "0.08em",
+            color: "var(--ink-soft)",
+            margin: "0 0 20px",
+            textTransform: "uppercase",
+          }}
+        >
+          Skills
+        </h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+          {skills.map((skill) => (
+            <span
+              key={skill}
+              style={{
+                fontSize: "14px",
+                border: "1px solid var(--line)",
+                borderRadius: "4px",
+                padding: "6px 14px",
+              }}
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <hr
+        style={{
+          border: "none",
+          borderTop: "1px solid var(--line)",
+          margin: 0,
+        }}
+      />
+
+      <section style={{ padding: "56px 0 96px" }}>
+        <h2
+          style={{
+            fontSize: "13px",
+            fontFamily: "'JetBrains Mono', monospace",
+            letterSpacing: "0.08em",
+            color: "var(--ink-soft)",
+            margin: "0 0 20px",
+            textTransform: "uppercase",
+          }}
+        >
+          Contact
+        </h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="mailto:your.email@example.com"
+            style={{ fontSize: "16px", textDecoration: "underline" }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            your.email@example.com
           </a>
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="https://github.com/nathune"
+            style={{ fontSize: "16px", textDecoration: "underline" }}
           >
-            Documentation
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com/in/your-handle"
+            style={{ fontSize: "16px", textDecoration: "underline" }}
+          >
+            LinkedIn
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
