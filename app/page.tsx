@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type ProjectMedia =
   | { kind: "image"; src: string; alt?: string }
@@ -32,47 +32,67 @@ const projects: Project[] = [
   { kind: "image", src: "/tumor.png", alt: "Tumor CAD render" },
   {
     kind: "text",
-    heading: "Overview",
-    body: "Using gel-silicone molds of varying hardness, I created a silicone sheet that mimics bowel tissue with an embedded tumor. The surrounding tissue is cast at a softer durometer while a harder silicone core represents the tumor. All of this formed a single CAD-designed mold poured in stages.",
+    heading: "Overview | Research — UCLA CASIT Lab (June 2024 – May 2025)",
+    body: "To create realistic test cases for robotic palpation experiments, I designed silicone tissue phantoms that simulated both healthy bowel tissue and embedded tumors. Using a CAD-designed multi-stage mold, I cast soft silicone to represent surrounding tissue and integrated a higher-durometer silicone core to replicate a tumor. After several design iterations, I refined the mold design and sealing mechanisms to eliminate silicone leakage and uneven surface formation. I was able to then produce consistent samples ranging at different hardness levels.",
   },
-  {
-    kind: "text",
-    heading: "Experience: Research — UCLA CASIT Lab (June 2024 – May 2025)",
-    body: "Implemented a fiber Bragg grating (FBG) haptic sensing system on the da Vinci Si surgical robot to measure applied force and improve tactile feedback during robotic-assisted palpation. Designed and integrated optical encoders, Arduino-based data acquisition, and 3D-printed CAD components for sensor housing. Conducted human trials on 8 silicone tissue phantoms — results showed classification accuracies of 44.5% (manual), 33.9% (robot only), 46.7% (robot + haptic), and 80% (robot + AI).",
-  },
-  { kind: "link", label: "View CAD Files", href: "#" },
+
+  
 ],
   },
   {
-    title: "Project title two",
-    type: "CODE",
-    description: "A short placeholder description.",
+    title: "Joint Kinematics Under Fatigue, a Motion Capture Study",
+    type: "RESEARCH",
+    description: "Studied how neuromuscular fatigue affects shoulder and elbow joint kinematics during a tennis forehand swing using OpenSim and OpenCap motion capture.",
     link: "#",
     color: "#C9CFC4",
+    image: "/presenting-card.jpg",
     modalMedia: [
       {
         kind: "text",
-        heading: "About this project",
-        body: "Replace this with a real description.",
+        heading: "Overview",
+        body: "I examined the impact of fatigue on upper-limb joint kinematics during a tennis forehand swing using motion capture software, OpenSim and OpenCap. Shoulder flexion, adduction, and rotation, along with elbow flexion, were tracked across baseline and fatigue trials and compared using Euclidean distance and dynamic time warping to build an accurate representative baseline curve.",
       },
-      { kind: "link", label: "GitHub Repo", href: "#" },
+      {
+        kind: "text",
+        heading: "Engineering Challenge",
+        body: "Raw trial data couldn't be compared directly due to timing offsets between recordings, and averaging trials alone produced a misleading 'average swing' rather than an accurate baseline. I addressed this by normalizing each trial's time axis from 0 to 1, then applying dynamic time warping and Euclidean distance calculations to align trials and construct a representative midpoint baseline for accurate comparison against fatigue trials.",
+      },
+      {
+        kind: "text",
+        heading: "Results & Findings",
+        body: "Fatigue trials showed reduced peak joint angles and flattened angular trajectories compared to baseline, most notably in elbow flexion and shoulder adduction. The elbow flexion joint showed the greatest deviation from baseline (L2 distance of 156.00), while shoulder rotation showed the largest overall change (517.74), indicating fatigue disrupts joint coordination and timing during the swing. This indicated both injury prevention and robotic motion optimization.",
+      },
+      { kind: "link", label: "View Research Poster (PDF)", href: "/NTU_Research_Poster_Final.pdf" },
     ],
   },
   {
-    title: "Project title three",
-    type: "RESEARCH",
-    description: "A short placeholder description.",
-    link: "#",
-    color: "#D6CFC2",
-    modalMedia: [
-      {
-        kind: "text",
-        heading: "Research Summary",
-        body: "Replace this with your research abstract or summary.",
-      },
-      { kind: "link", label: "Read Paper", href: "#" },
-    ],
-  },
+  title: "TShark9000: Network Protocol Security Analyzer",
+  type: "CODE",
+  description: "1st place hackathon project — a full-stack network capture analyzer that flags security risks and renders network traffic in 3D.",
+  link: "#",
+  color: "#D6CFC2",
+  image: "/3D-visual.jpg",
+  modalMedia: [
+    
+    {
+      kind: "text",
+      heading: "Overview",
+      body: "Built at the SYNthesis Hackathon, TShark9000 is a web tool that parses network packet captures and generates a security report. Users upload a capture file and get back a breakdown of source and destination IPs alongside a dedicated tab flagging potential security alerts, including a 3D visualization of the network itself.",
+    },
+    {
+      kind: "text",
+      heading: "Engineering Challenge",
+      body: "As part of the team, I helped design the web interface using Flask and HTML/CSS, building the file upload pipeline, automated packet data extraction, and the underlying network analysis logic. A core challenge in creating the backbone of the website was integrating features like high-risk traffic flagging and packet identification, which lived in separate files written by different teammates. I solved this by tracing through each function, understanding what it expected as input and returned as output, and restructuring the calls so everything aligned cleanly within the main backbone of the code.",    },
+    { kind: "image", src: "/tshark-gui.jpg", alt: "TShark9000 application interface" },
+    {
+      kind: "text",
+      heading: "Recognition & Team",
+      body: "Awarded 1st place at the SYNthesis Hackathon, hosted by the Computer Networking Association, out of competing teams building network and security tools. Built collaboratively with a team of four over the course of the hackathon.",
+    },
+    { kind: "link", label: "View on GitHub", href: "https://github.com/caleblin125/Tshark1/tree/main" },
+    { kind: "link", label: "View on Devpost", href: "https://devpost.com/software/tshark9000" },
+  ],
+},
   {
     title: "Project title four",
     type: "PDF",
@@ -289,11 +309,81 @@ function ProjectModal({
   );
 }
 
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  const [onDark, setOnDark] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? scrollTop / docHeight : 0;
+      setProgress(pct);
+
+      // Ring sits bottom-right; check if that point is still over the
+      // dark hero section (roughly the first viewport height) or has
+      // scrolled into the light body.
+      const ringPointY = scrollTop + window.innerHeight - 32;
+      setOnDark(ringPointY < window.innerHeight);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const radius = 16;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - circumference * progress;
+  const strokeColor = onDark ? "#FAFAF8" : "#1A1A18";
+  const trackColor = onDark ? "rgba(255,255,255,0.3)" : "var(--line)";
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: "24px",
+        right: "24px",
+        zIndex: 50,
+        pointerEvents: "none",
+      }}
+    >
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle
+          cx="20"
+          cy="20"
+          r={radius}
+          fill="none"
+          stroke={trackColor}
+          strokeWidth="1.5"
+        />
+        <circle
+          cx="20"
+          cy="20"
+          r={radius}
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth="1.5"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          transform="rotate(-90 20 20)"
+          style={{ transition: "stroke-dashoffset 0.1s linear, stroke 0.3s ease" }}
+        />
+      </svg>
+    </div>
+  );
+}
+
 export default function Home() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   return (
     <main>
+      {/* Scroll progress ring */}
+      <ScrollProgress />
+
       {/* Modal */}
       {activeProject && (
         <ProjectModal
@@ -440,13 +530,8 @@ export default function Home() {
             Showcase
           </h2>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "24px",
-            }}
-          >
+          <div className="project-grid">
+            
             {projects.map((project) => (
               <motion.div
                 key={project.title}
@@ -479,22 +564,17 @@ export default function Home() {
                     backgroundPosition: "center",
                   }}
                 />
-                <motion.div
-                  variants={{
-                    rest: { opacity: 0, y: 12 },
-                    hover: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "none",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "flex-end",
-                    padding: "20px",
-                  }}
-                >
+              <motion.div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 50%)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  padding: "20px",
+                }}
+              >
                   <span
                     style={{
                       fontSize: "11px",

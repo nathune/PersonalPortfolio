@@ -39,3 +39,15 @@ a {
     transition: none !important;
   }
 }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 640px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
