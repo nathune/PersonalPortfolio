@@ -144,6 +144,10 @@ const skills = [
   "Wireshark/Networking",
   "Cisco DNA/ISE",
   "HTML",
+  "Arduino",
+  "TypeScript",
+  "Teaching",
+  "HR/Recruiting"
 ];
 
 function ProjectModal({
@@ -633,6 +637,7 @@ function NavMenu({ onDark }: { onDark: boolean }) {
 
 function ExperienceSection({ id }: { id?: string }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [entryHeights, setEntryHeights] = useState<number[]>([]);
   const entryRefs = experiences.map(() => useRef<HTMLDivElement>(null));
 
   useEffect(() => {
@@ -645,6 +650,15 @@ function ExperienceSection({ id }: { id?: string }) {
       return obs;
     });
     return () => observers.forEach((obs) => obs.disconnect());
+  }, []);
+
+  useEffect(() => {
+    const measureHeights = () => {
+      setEntryHeights(entryRefs.map((ref) => ref.current?.offsetHeight ?? 220));
+    };
+    measureHeights();
+    window.addEventListener("resize", measureHeights);
+    return () => window.removeEventListener("resize", measureHeights);
   }, []);
 
   return (
@@ -689,7 +703,7 @@ function ExperienceSection({ id }: { id?: string }) {
                 <div
                   style={{
                     width: "1px",
-                    height: "220px",
+                    height: entryHeights[i] != null ? `${entryHeights[i]}px` : "220px",
                     background: i < activeIndex
                       ? "var(--ink)"
                       : "var(--line)",
