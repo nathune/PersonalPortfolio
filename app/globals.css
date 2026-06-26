@@ -50,4 +50,8 @@ a {
   .project-grid {
     grid-template-columns: 1fr;
   }
+
+  .experience-entry {
+    grid-template-columns: 1fr !important;
+  }
 }
