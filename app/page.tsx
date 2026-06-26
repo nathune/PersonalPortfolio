@@ -7,7 +7,8 @@ type ProjectMedia =
   | { kind: "image"; src: string; alt?: string }
   | { kind: "video"; src: string }
   | { kind: "text"; heading?: string; body: string }
-  | { kind: "link"; label: string; href: string };
+  | { kind: "link"; label: string; href: string }
+  | { kind: "model"; src: string; alt?: string };
 
 type Project = {
   title: string;
@@ -93,19 +94,37 @@ const projects: Project[] = [
     { kind: "link", label: "View on Devpost", href: "https://devpost.com/software/tshark9000" },
   ],
 },
-  {
-    title: "Project title four",
-    type: "PDF",
-    description: "A short placeholder description.",
+{
+    title: "UCSC Rocket Team",
+    type: "CAD",
+    description: "Payload and electrical sub-lead, designing and validating sub-scale payload prototypes for the rocket team.",
     link: "#",
     color: "#CCCFCB",
+    image: "LaunchSite.png",
     modalMedia: [
+      { kind: "model", src: "/Frame_Payload.gltf", alt: "Payload Frame CAD model" },
       {
         kind: "text",
-        heading: "Document",
-        body: "Replace this with a summary of the document.",
+        heading: "Overview | UCSC Rocket Team (2023 – Present)",
+        body: "As Payload & Electrical Sub-lead, I led a cross-functional sub-team supporting payload development from concept through execution, coordinating mechanical, electrical, and constraint requirements. I designed, modeled, and tested sub-scale payload prototypes in Onshape to validate subsystem integration before full-scale assembly.",
       },
-      { kind: "link", label: "View PDF", href: "#" },
+      {
+        kind: "text",
+        heading: "Engineering Challenge",
+        body: "A core challenge was reducing payload mass without compromising structural integrity. I evaluated trade-offs between material selection, strength components, and deployment reliability, ultimately reducing payload mass by roughly 30% while maintaining the structural requirements needed for flight.",
+      },
+      { kind: "model", src: "/Subscale_Sabot.gltf", alt: "Subscale sabot CAD model" },
+      {
+        kind: "text",
+        heading: "Subscale Sabot",
+        body: "Replace this with a description of the subscale sabot — what it does, why it was designed this way, and any constraints or iterations involved.",
+      },
+      { kind: "model", src: "/No_Holes_Sabot.gltf", alt: "No-holes sabot CAD model" },
+      {
+        kind: "text",
+        heading: "No-Holes Sabot",
+        body: "Replace this with a description of this sabot variant — what changed from the previous version, and why.",
+      },
     ],
   },
 ];
@@ -245,6 +264,27 @@ function ProjectModal({
                   />
                 );
               }
+              if (block.kind === "model") {
+                return (
+                  // @ts-ignore -- model-viewer is a web component, not typed by React
+                  <model-viewer
+                    key={i}
+                    src={block.src}
+                    alt={block.alt ?? project.title}
+                    camera-controls
+                    auto-rotate
+                    exposure="1.2"
+                    shadow-intensity="0.6"
+                    environment-image="neutral"
+                    style={{
+                      width: "100%",
+                      height: "400px",
+                      borderRadius: "6px",
+                      background: "#9A9A94",
+                    }}
+                  />
+                );
+              }
               if (block.kind === "text") {
                 return (
                   <div key={i}>
@@ -378,6 +418,10 @@ function ScrollProgress() {
 
 export default function Home() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+
+  useEffect(() => {
+    import("@google/model-viewer");
+  }, []);
 
   return (
     <main>
